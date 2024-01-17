@@ -1,10 +1,10 @@
-const products  = require('../data');
+const products = require('../data');
 
-const getProducts = (req,res)=>{
+const getProducts = (req, res) => {
     try {
-        const newProducts = products.map((product)=>{
-            const {id, name, price, desc} = product
-            return {id, name, price, desc};
+        const newProducts = products.map((product) => {
+            const { id, name, price, desc } = product
+            return { id, name, price, desc };
         })
         res.json(newProducts)
 
@@ -13,4 +13,17 @@ const getProducts = (req,res)=>{
     }
 }
 
-module.exports = getProducts;
+const getProductByID = (req, res) => {
+    console.log('reachedded')
+    const itemId = Number(req.params.id);
+
+    const item = products.find(item => item.id === itemId);
+    console.log(item)
+    if (item) {
+        res.json(item);
+    } else {
+        res.json({ message: `item ${itemId} doesn't exist` })
+    }
+}
+
+module.exports = { getProducts, getProductByID };
